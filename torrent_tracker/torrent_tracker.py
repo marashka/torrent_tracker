@@ -21,12 +21,8 @@ class TorrentTracker:
         trackers = []
         for urls_list in torrent_pars.announce_urls:  # сначала идет основной список, потом back-up списки
             for url in urls_list:
-                url = url.rstrip()
-                announce_index = url.rfind("/announce")
-                if announce_index != -1:
-                    url = url[:announce_index]
-                elif url.endswith("/ann"):  # возможно такие трекеры не валидны, я хз
-                    url = url.replace("ann", "")
+                if "http://retracker.local/" in url:
+                    continue
                 trackers.append(Tracker(url=url, hex_hash_info=torrent_pars.info_hash))
         torrent.trackers = trackers
 
